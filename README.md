@@ -1,73 +1,29 @@
-```
-rails new cat-tin-r7 -d postgresql --api
-```
+# README
 
-gem file
-```
-gem 'devise_token_auth', '>= 1.2.0', git: "https://github.com/lynndylanhurley/devise_token_auth"
-```
+This project has devise_token_auth, react_router, etc setup.
+- uses rails v7
+- more info about the project
 
+## Getting starter (how to use)
 
-```
-bundle
-rails db:create
-rails g devise_token_auth:install User api/auth
+## Clone
+1. git clone git@github.com:jimibue/sum22-starter-r7.git 'project-name'
+2. cd 'project-name'
 
-```
+### rails stuff
+1. renaming our database in the config/database.yml file
+2. bundle
+3. rails db:create db:migrate (db:seed if needed/applicable)
+4. rails s -p 3001
 
-user.rb
-```
-class User < ActiveRecord::Base
-  extend Devise::Models
+### react stuff
+> make sure in  client folder
+1. yarn
+2. yarn start
 
-  # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable and :omniauthable
-  devise :database_authenticatable, :registerable,
-          :recoverable, :rememberable, :trackable, :validatable
-  include DeviseTokenAuth::Concerns::User
-end
-```
-
-```
-rails g migration add_trackable_to_users
-```
+### git stuff
+1. git remote rm origin
+2. create new repo on github
+3. git remote add origin <ssh-link>
 
 
-db/migrations/_add_trackable_to_users.rb
-```
-class AddTrackableToUsers < ActiveRecord::Migration[7.0]
-  def change
-      ## Trackable
-      add_column :users, :sign_in_count, :integer, :default => 0
-      add_column :users, :current_sign_in_at, :datetime
-      add_column :users, :last_sign_in_at, :datetime
-      add_column :users, :current_sign_in_ip, :string
-      add_column :users, :last_sign_in_ip, :string
-  end
-end
-```
-
-config/application.rb 
-```
- class Application < Rails::Application
-    # Initialize configuration defaults for originally generated Rails version.
-    config.load_defaults 7.0
-
-    # Configuration for the application, engines, and railties goes here.
-    #
-    # These settings can be overridden in specific environments using the files
-    # in config/environments, which are processed later.
-    #
-    # config.time_zone = "Central Time (US & Canada)"
-    # config.eager_load_paths << Rails.root.join("extras")
-
-    # Only loads a smaller set of middleware suitable for API only apps.
-    # Middleware like session, flash, cookies can be added back manually.
-    # Skip views, helpers and assets when generating a new resource.
-    config.api_only = true
-
-    ## ***ADD THESE TWO LINES****
-    config.middleware.use ActionDispatch::Cookies
-    config.middleware.use ActionDispatch::Session::CookieStore, key: '_namespace_key'
-  end
- ```
