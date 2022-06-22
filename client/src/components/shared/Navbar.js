@@ -34,6 +34,9 @@ const Navbar = () => {
           <Link to="/">
             <li>Home</li>
           </Link>
+          <Link to="/hooks">
+            <li>Hooks</li>
+          </Link>
           {renderNavItems()}
         </ul>
       </nav>
